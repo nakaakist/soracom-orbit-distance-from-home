@@ -1,0 +1,17 @@
+[package]
+name = "soralet"
+version = "0.1.2"
+authors = ["0x6b"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+soracom-orbit-sdk = { path = "../orbit-sdk-rust"}
+serde = "^1"
+serde_derive = "^1"
+serde_json = "^1"
+wee_alloc = "0.4.5"

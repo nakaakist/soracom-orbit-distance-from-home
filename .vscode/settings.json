@@ -1,0 +1,11 @@
+{
+  "workbench.colorTheme": "Default Dark+",
+  "workbench.colorCustomizations": {
+    "activityBarBadge.background": "#34cdd7",
+    "activityBarBadge.foreground": "#161717",
+    "statusBar.background": "#205ba6",
+    "statusBarItem.remoteBackground": "#0f8f4f"
+  },
+  "rust-analyzer.updates.askBeforeDownload": false,
+  "soracom.auth.useCliConfiguration": true
+}
