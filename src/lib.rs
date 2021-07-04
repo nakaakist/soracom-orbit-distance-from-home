@@ -23,11 +23,6 @@ struct Input {
     lon: f64,
     bat: i32,
     rs: i32,
-    temp: f64,
-    humi: f64,
-    x: f64,
-    y: f64,
-    z: f64,
     #[serde(alias = "type")]
     send_type: i32,
 }
@@ -41,11 +36,6 @@ struct Output {
     lon: f64,
     bat: i32,
     rs: i32,
-    temp: f64,
-    humi: f64,
-    x: f64,
-    y: f64,
-    z: f64,
     #[serde(alias = "type")]
     send_type: i32,
 }
@@ -81,11 +71,6 @@ fn process_uplink(buf: Vec<u8>) -> Result<String, Error> {
         lon: input.lon,
         bat: input.bat,
         rs: input.rs,
-        temp: input.temp,
-        humi: input.humi,
-        x: input.x,
-        y: input.y,
-        z: input.z,
         send_type: input.send_type,
     };
 
