@@ -1,5 +1,10 @@
-#[macro_use] extern crate serde_derive;
+mod distance;
+mod home_location;
+
 use soracom_orbit_sdk as orbit;
+
+#[macro_use]
+extern crate serde_derive;
 
 type Error = Box<dyn std::error::Error + Send + Sync + 'static>;
 
@@ -10,53 +15,42 @@ pub enum ErrorCode {
     ExecError = -1,
 }
 
-/*
-uplink() processes input data like the following:
-{
-    "clickType":1,
-    "clickTypeName":"SINGLE",
-    "batteryLevel":1,
-    "binaryParserEnabled":true
-}
-*/
-
+// デバイスから送られてくるデータ形式
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase")]
 struct Input {
-    click_type: i32,
-    click_type_name: String,
-    battery_level: f64,
-    binary_parser_enabled: bool,
+    lat: f64,
+    lon: f64,
+    bat: i32,
+    rs: i32,
+    temp: f64,
+    humi: f64,
+    x: f64,
+    y: f64,
+    z: f64,
+    #[serde(alias = "type")]
+    send_type: i32,
 }
 
-/*
-output with some data from tags and source:
-{
-    "clickType":1,
-    "clickTypeName":"SINGLE",
-    "batteryLevel":1,
-    "binaryParserEnabled":true
-    "imsi":"xxxxxxxxxxxxxxx",
-    "name":"name of button"
-    "location":{
-        "lat":35.12345,
-        "lon":138.12345,
-    }
-}
-*/
+// SORACOMプラットフォーム側に送るデータ形式
 #[derive(Serialize)]
 #[serde(rename_all = "camelCase")]
 struct Output {
-    click_type: i32,
-    click_type_name: String,
-    battery_level: f64,
-    binary_parser_enabled: bool,
-    imsi: String,
-    name: String,
-    location: Option<orbit::Location>,
-    timestamp: i64,
+    distance_from_home: f64,
+    lat: f64,
+    lon: f64,
+    bat: i32,
+    rs: i32,
+    temp: f64,
+    humi: f64,
+    x: f64,
+    y: f64,
+    z: f64,
+    #[serde(alias = "type")]
+    send_type: i32,
 }
 
+// データ変換処理
 #[no_mangle]
 pub fn uplink() -> ErrorCode {
     let buf = orbit::get_input_buffer();
@@ -76,25 +70,26 @@ fn process_uplink(buf: Vec<u8>) -> Result<String, Error> {
     let input: Input = serde_json::from_slice(buf.as_ref())?;
 
     let output = Output {
-        click_type: input.click_type,
-        click_type_name: input.click_type_name,
-        battery_level: input.battery_level,
-        binary_parser_enabled: input.binary_parser_enabled,
-        imsi: orbit::get_source_value("resourceId"),
-        name: orbit::get_tag_value("name"),
-        location: orbit::get_location(),
-        timestamp: orbit::get_timestamp(),
+        distance_from_home: distance::calc(
+            distance::Location {
+                lat_deg: input.lat,
+                lon_deg: input.lon,
+            },
+            home_location::LOCATION,
+        ),
+        lat: input.lat,
+        lon: input.lon,
+        bat: input.bat,
+        rs: input.rs,
+        temp: input.temp,
+        humi: input.humi,
+        x: input.x,
+        y: input.y,
+        z: input.z,
+        send_type: input.send_type,
     };
 
     let output_json = serde_json::to_string(&output)?;
 
     Ok(output_json)
-}
-
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
-    }
 }

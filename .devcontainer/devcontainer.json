@@ -2,7 +2,7 @@
   "name": "SORACOM Orbit Development Container",
   "dockerFile": "Dockerfile",
   "workspaceMount": "source=${localWorkspaceFolder}/../,target=/workspace,type=bind,consistency=delegated",
-  "workspaceFolder": "/workspace/rust",
+  "workspaceFolder": "/workspace/soracom-orbit-distance-from-home",
   "settings": {
     "terminal.integrated.shell.linux": "/bin/bash",
     "terminal.integrated.shellArgs.linux": ["--init-file", "/workspace/.bashrc"]

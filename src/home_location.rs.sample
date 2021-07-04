@@ -1,0 +1,6 @@
+use crate::distance;
+
+pub const LOCATION: distance::Location = distance::Location {
+    lat_deg: 35,
+    lon_deg: 135,
+};

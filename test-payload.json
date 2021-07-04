@@ -1,0 +1,4 @@
+{
+    "source": { "resourceType": "Subscriber", "resourceId": "295050919999999999" },
+    "payload": "{\"lat\":35,\"lon\":135,\"bat\":1,\"rs\":0,\"temp\":27.0,\"humi\":62.0,\"x\":-64.0,\"y\":0.0,\"z\":-1024.0,\"type\":0}"
+  }
