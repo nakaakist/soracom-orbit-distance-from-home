@@ -13,7 +13,7 @@ pub fn calc(location1: Location, location2: Location) -> f64 {
     let lat2_rad = to_rad(location2.lat_deg);
     let lon2_rad = to_rad(location2.lon_deg);
 
-    let earth_radius = 6138.137;
+    let earth_radius = 6378.137;
 
     return earth_radius
         * (lat1_rad.sin() * lat2_rad.sin()
