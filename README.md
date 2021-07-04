@@ -7,9 +7,8 @@
 
 
 ## 利用方法
-
 1. GPSマルチユニットを買う。
-1. [公式チュートリアル](https://soracom.jp/recipes_index/3830/)を参照し、GPSマルチユニットからHarvestにデータを定期送信し、Lagoonで可視化するよう一通り設定する。
+1. [公式チュートリアル](https://soracom.jp/recipes_index/3830/)を参照し、GPSマルチユニットからHarvestにデータを定期送信し、Lagoonで可視化するよう一通り設定する。なお、このとき、GPSマルチユニットからの送信内容には必ず「位置情報(GPS)」を含める。
 1. 本リポジトリをローカルにclone。
 1. `src/home_location.rs.sample`コピーして`src/home_location.rs`を作り、`lat_deg`と`lon_deg`にそれぞれ自宅の緯度と経度を入力する。
 1. [公式チュートリアル](https://users.soracom.io/ja-jp/docs/orbit/setup/)を参照し、前提条件インストール、SAM、SORACOM CLIの設定を行い、本リポジトリをVSCodeで開く。その後、チュートリアルの手順にしたがってVSCode拡張機能のインストールなどを行う。
